@@ -1,28 +1,29 @@
 package com.ozgurokanozdal.habitTracker.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
+
 
 @Entity
 public class User {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    @Column
     private String username;
-    @Column
+
     private String password;
-    @Column
+
     private String name;
-    @Column
+
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Habit> habitSet;
 
 
 
