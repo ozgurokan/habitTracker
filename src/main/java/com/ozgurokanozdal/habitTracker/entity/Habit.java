@@ -14,8 +14,10 @@ public class Habit {
     private String name;
 
 
+    @ManyToOne
     private User user;
 
+    @OneToMany
     private Set<Activity> activities;
 
 

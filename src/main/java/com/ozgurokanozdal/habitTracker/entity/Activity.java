@@ -14,6 +14,7 @@ public class Activity {
 
     private String name;
 
+    @ManyToOne
     private Habit habit;
 
     private Instant createTime;
