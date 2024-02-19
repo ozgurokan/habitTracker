@@ -1,13 +1,17 @@
 package com.ozgurokanozdal.habitTracker.service;
 
 
+import com.ozgurokanozdal.habitTracker.dto.ActivityCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
 import com.ozgurokanozdal.habitTracker.entity.Activity;
+import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.repository.ActivityRepository;
 import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,4 +34,28 @@ public class ActivityService {
     }
 
 
+    public ActivityResponse get(Long activityId){
+        Activity activity = activityRepository.findById(activityId).orElseThrow(EntityNotFoundException::new);
+        return modelMapper.map(activity,ActivityResponse.class);
+    }
+
+    public ActivityResponse create(ActivityCreateRequest activityCreateRequest) {
+        Habit habit = habitRepository.findById(activityCreateRequest.getHabit_id()).orElseThrow(EntityNotFoundException::new);
+        Activity activity = new Activity(activityCreateRequest.getName(),habit, Instant.now());
+        activityRepository.save(activity);
+        return modelMapper.map(activity,ActivityResponse.class);
+    }
+
+    public ActivityResponse update(Long activityId, ActivityCreateRequest activityCreateRequest) {
+        Activity activity = activityRepository.findById(activityId).orElseThrow(EntityNotFoundException::new);
+        activity.setName(activityCreateRequest.getName());
+        activityRepository.save(activity);
+        return modelMapper.map(activity,ActivityResponse.class);
+    }
+
+    public String delete(Long activityId) {
+        Activity activity = activityRepository.findById(activityId).orElseThrow(EntityNotFoundException::new);
+        activityRepository.delete(activity);
+        return "Activity -> " + activityId + " deleted";
+    }
 }

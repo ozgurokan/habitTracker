@@ -84,8 +84,9 @@ public class UserService {
 
     }
 
-    public void delete(long id){
+    public String delete(long id){
 
         userRepository.deleteById(id);
+        return "User -> " + id + " deleted";
     }
 }

@@ -3,6 +3,7 @@ package com.ozgurokanozdal.habitTracker.service;
 
 import com.ozgurokanozdal.habitTracker.dto.HabitCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
+import com.ozgurokanozdal.habitTracker.dto.HabitUpdateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.entity.User;
@@ -54,5 +55,21 @@ public class HabitService {
         return modelMapper.map(habit, HabitCreateRequest.class);
     }
 
+    public HabitResponse update(Long habitId,HabitUpdateRequest habitUpdateRequest){
+        Habit habit = habitRepository.findById(habitId).orElseThrow(EntityNotFoundException::new);
 
+        habit.setName(habitUpdateRequest.getName());
+        habitRepository.save(habit);
+        return modelMapper.map(habit, HabitResponse.class);
+    }
+
+
+    public String delete(Long habitId) {
+        Habit habit = habitRepository.findById(habitId).orElseThrow(EntityNotFoundException::new);
+
+        habitRepository.delete(habit);
+
+        return "Habit -> " + habitId + " deleted";
+
+    }
 }
