@@ -1,6 +1,7 @@
 package com.ozgurokanozdal.habitTracker.service;
 
 
+import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -78,15 +80,21 @@ public class UserService {
             userRepository.save(userToUpdate);
             return modelMapper.map(userToUpdate, UserUpdateRequest.class);
         }else{
-            throw new RuntimeException("user not found");
+            throw new EntityNotFoundException();
         }
 
 
     }
 
     public String delete(long id){
-
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        userRepository.delete(user);
         return "User -> " + id + " deleted";
+    }
+
+    public List<HabitResponse> getUserHabitList(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        List<Habit> habitList =  user.getHabitList();
+        return habitList.stream().map(habit -> modelMapper.map(habit, HabitResponse.class)).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.ozgurokanozdal.habitTracker.controller;
 
 
+import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
@@ -36,6 +37,11 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> get(@PathVariable Long userId){
         return ResponseEntity.ok(userService.getOneById(userId));
+    }
+
+    @GetMapping("/{userId}/habits")
+    public ResponseEntity<List<HabitResponse>> getUserHabits(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.getUserHabitList(userId));
     }
 
 
