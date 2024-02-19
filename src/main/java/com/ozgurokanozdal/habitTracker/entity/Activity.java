@@ -15,11 +15,10 @@ public class Activity {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "habit_id",nullable = false)
     private Habit habit;
 
     private Instant createTime;
-
-    private Instant updateTime;
 
 
 }

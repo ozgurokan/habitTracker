@@ -3,7 +3,7 @@ package com.ozgurokanozdal.habitTracker.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Entity
@@ -24,8 +24,8 @@ public class User {
 
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Habit> habitSet;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Habit> habitList;
 
 
     public User(){
@@ -36,8 +36,16 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
-
     }
+
+    public User(String name, String username, String password,String email,List<Habit> habitList){
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.habitList = habitList;
+    }
+
     public long getId() {
         return id;
     }
@@ -58,8 +66,12 @@ public class User {
         return email;
     }
 
-    public Set<Habit> getHabitSet() {
-        return habitSet;
+    public List<Habit> getHabitList() {
+        return habitList;
+    }
+
+    public void setHabitList(List<Habit> habitList) {
+        this.habitList = habitList;
     }
 
     public void setId(long id) {
@@ -80,5 +92,17 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", habitSet=" + habitList +
+                '}';
     }
 }

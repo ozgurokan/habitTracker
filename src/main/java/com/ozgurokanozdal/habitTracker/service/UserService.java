@@ -4,9 +4,14 @@ package com.ozgurokanozdal.habitTracker.service;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
+import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.entity.User;
+import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
 import com.ozgurokanozdal.habitTracker.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,10 +24,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final HabitRepository habitRepository;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper){
+    public UserService(UserRepository userRepository, ModelMapper modelMapper,HabitRepository habitRepository){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.habitRepository = habitRepository;
 
     }
 
@@ -43,15 +50,9 @@ public class UserService {
     }
 
     public UserResponse getOneById(long id){
+        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return modelMapper.map(user, UserResponse.class);
 
-        // hata döndürme işini öğren
-
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
-            return modelMapper.map(user, UserResponse.class);
-        }else{
-            throw new RuntimeException("user not found");
-        }
 
     };
 
