@@ -27,7 +27,7 @@ public class Habit {
     public Habit() {
     }
 
-    public Habit( String name, User user) {
+    public Habit(String name, User user) {
         this.name = name;
         this.user = user;
 
