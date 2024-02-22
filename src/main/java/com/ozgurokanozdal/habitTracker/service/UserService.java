@@ -1,6 +1,7 @@
 package com.ozgurokanozdal.habitTracker.service;
 
 
+import com.ozgurokanozdal.habitTracker.config.PasswordEncoder;
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
@@ -14,6 +15,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,17 +26,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final HabitRepository habitRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper,HabitRepository habitRepository){
+    public UserService(UserRepository userRepository, ModelMapper modelMapper,HabitRepository habitRepository,PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.habitRepository = habitRepository;
+        this.passwordEncoder = passwordEncoder;
 
     }
 
@@ -62,8 +68,7 @@ public class UserService {
     public UserResponse save(UserCreateRequest userCreateRequest){
         // username - email unique olmalı bunu araştır.
         // best practice araştır.
-
-        User user = new User(userCreateRequest.getName(),userCreateRequest.getUsername(),userCreateRequest.getPassword(), userCreateRequest.getEmail());
+        User user = new User(userCreateRequest.getName(),userCreateRequest.getUsername(),passwordEncoder.bCryptPasswordEncoder().encode(userCreateRequest.getPassword()), userCreateRequest.getEmail());
         user = userRepository.save(user);
 
         return modelMapper.map(user, UserResponse.class);
@@ -96,5 +101,17 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
         List<Habit> habitList =  user.getHabitList();
         return habitList.stream().map(habit -> modelMapper.map(habit, HabitResponse.class)).collect(Collectors.toList());
+    }
+
+    public User getByUsername(String username){
+
+        return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
     }
 }
