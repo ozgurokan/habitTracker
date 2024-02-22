@@ -1,6 +1,7 @@
 package com.ozgurokanozdal.habitTracker.controller;
 
 
+import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
@@ -38,10 +39,20 @@ public class UserController {
         return ResponseEntity.ok(userService.getOneById(userId));
     }
 
+    @GetMapping("/{userId}/habits")
+    public ResponseEntity<List<HabitResponse>> getUserHabits(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.getUserHabitList(userId));
+    }
+
 
     @PutMapping("/{userId}")
     public ResponseEntity<UserUpdateRequest> update(@PathVariable Long userId, @RequestBody UserUpdateRequest userUpdateRequest){
         return ResponseEntity.ok(userService.update(userId,userUpdateRequest));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> delete(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.delete(userId));
     }
 
 

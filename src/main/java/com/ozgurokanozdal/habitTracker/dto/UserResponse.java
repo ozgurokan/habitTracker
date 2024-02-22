@@ -1,5 +1,9 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
+import com.ozgurokanozdal.habitTracker.entity.Habit;
+
+import java.util.List;
+
 public class UserResponse {
 
     private long id;
@@ -8,7 +12,6 @@ public class UserResponse {
 
 
     private String name;
-
 
     public long getId() {
         return id;
@@ -34,4 +37,5 @@ public class UserResponse {
     public void setName(String name) {
         this.name = name;
     }
+
 }

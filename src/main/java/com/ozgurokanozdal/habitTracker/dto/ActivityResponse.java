@@ -1,33 +1,28 @@
-package com.ozgurokanozdal.habitTracker.entity;
+package com.ozgurokanozdal.habitTracker.dto;
 
-import jakarta.persistence.*;
+
+import com.ozgurokanozdal.habitTracker.entity.Habit;
 
 import java.time.Instant;
 
+public class ActivityResponse {
 
-@Entity
-public class Activity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "habit_id",nullable = false)
-    private Habit habit;
+    private Long habitId;
 
     private Instant createTime;
 
-
-    public Activity(String name, Habit habit, Instant createTime) {
+    public ActivityResponse(long id, String name, Long habitId, Instant createTime) {
+        this.id = id;
         this.name = name;
-        this.habit = habit;
+        this.habitId = habitId;
         this.createTime = createTime;
     }
 
-    public Activity() {
+    public ActivityResponse() {
     }
 
     public long getId() {
@@ -46,12 +41,12 @@ public class Activity {
         this.name = name;
     }
 
-    public Habit getHabit() {
-        return habit;
+    public Long getHabitId() {
+        return habitId;
     }
 
-    public void setHabit(Habit habit) {
-        this.habit = habit;
+    public void setHabitId(Long habitId) {
+        this.habitId = habitId;
     }
 
     public Instant getCreateTime() {
