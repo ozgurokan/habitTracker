@@ -8,6 +8,7 @@ import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.entity.User;
+import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
 import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
 import com.ozgurokanozdal.habitTracker.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -59,7 +60,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponse getOneById(long id){
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return modelMapper.map(user, UserResponse.class);
 
 
@@ -85,33 +86,33 @@ public class UserService implements UserDetailsService {
             userRepository.save(userToUpdate);
             return modelMapper.map(userToUpdate, UserUpdateRequest.class);
         }else{
-            throw new EntityNotFoundException();
+            throw new UserNotFoundException();
         }
 
 
     }
 
     public String delete(long id){
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
         return "User -> " + id + " deleted";
     }
 
     public List<HabitResponse> getUserHabitList(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         List<Habit> habitList =  user.getHabitList();
         return habitList.stream().map(habit -> modelMapper.map(habit, HabitResponse.class)).collect(Collectors.toList());
     }
 
     public User getByUsername(String username){
 
-        return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
 
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 }

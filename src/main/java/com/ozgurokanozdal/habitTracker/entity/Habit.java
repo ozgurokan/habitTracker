@@ -22,7 +22,7 @@ public class Habit {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "habit",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Activity> activities;
 
     public Habit() {

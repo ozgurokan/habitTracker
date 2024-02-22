@@ -7,6 +7,8 @@ import com.ozgurokanozdal.habitTracker.dto.HabitUpdateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.entity.User;
+import com.ozgurokanozdal.habitTracker.exceptions.ContentNotFoundException;
+import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
 import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
 import com.ozgurokanozdal.habitTracker.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,20 +46,19 @@ public class HabitService {
     }
 
     public HabitResponse getById(Long habitId){
-        Habit habit  = habitRepository.findById(habitId).orElseThrow(EntityNotFoundException::new);
+        Habit habit  = habitRepository.findById(habitId).orElseThrow(ContentNotFoundException::new);
         return modelMapper.map(habit, HabitResponse.class);
     }
 
     public HabitCreateRequest create(HabitCreateRequest habitCreateRequest){
-        User user = userRepository.findById(habitCreateRequest.getUserId()).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(habitCreateRequest.getUserId()).orElseThrow(UserNotFoundException::new);
         Habit habit = new Habit(habitCreateRequest.getName(),user);
         habitRepository.save(habit);
         return modelMapper.map(habit, HabitCreateRequest.class);
     }
 
     public HabitResponse update(Long habitId,HabitUpdateRequest habitUpdateRequest){
-        Habit habit = habitRepository.findById(habitId).orElseThrow(EntityNotFoundException::new);
-
+        Habit habit = habitRepository.findById(habitId).orElseThrow(ContentNotFoundException::new);
         habit.setName(habitUpdateRequest.getName());
         habitRepository.save(habit);
         return modelMapper.map(habit, HabitResponse.class);
@@ -65,7 +66,7 @@ public class HabitService {
 
 
     public String delete(Long habitId) {
-        Habit habit = habitRepository.findById(habitId).orElseThrow(EntityNotFoundException::new);
+        Habit habit = habitRepository.findById(habitId).orElseThrow(ContentNotFoundException::new);
 
         habitRepository.delete(habit);
 
