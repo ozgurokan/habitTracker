@@ -3,7 +3,6 @@ package com.ozgurokanozdal.habitTracker.controller;
 
 import com.ozgurokanozdal.habitTracker.exceptions.ContentNotFoundException;
 import com.ozgurokanozdal.habitTracker.exceptions.CustomResponseBody;
-import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

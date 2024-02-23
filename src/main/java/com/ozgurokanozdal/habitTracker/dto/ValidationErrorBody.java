@@ -1,12 +1,12 @@
-package com.ozgurokanozdal.habitTracker.exceptions;
+package com.ozgurokanozdal.habitTracker.dto;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-public record CustomResponseBody(
+public record ValidationErrorBody(
         String path,
         int statusCode,
-        String message,
+        Set<String> errors,
         LocalDateTime localDateTime
 ) {
 }

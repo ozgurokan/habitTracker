@@ -6,11 +6,13 @@ import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.service.AuthService;
 import com.ozgurokanozdal.habitTracker.service.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@ResponseBody
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -30,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody UserCreateRequest userCreateRequest){
+    public ResponseEntity<UserResponse> register(@RequestBody @Valid UserCreateRequest userCreateRequest){
         return ResponseEntity.ok(authService.register(userCreateRequest));
     }
 
