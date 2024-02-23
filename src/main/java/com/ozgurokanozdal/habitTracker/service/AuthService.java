@@ -42,8 +42,10 @@ public class AuthService {
 
     public AuthResponse login(AuthRequest authRequest){
         User user = userRepository.findByUsername(authRequest.username()).orElseThrow(UserNotFoundException::new);
-
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                authRequest.username(),
+                authRequest.password())
+        );
         if (authentication.isAuthenticated()) {
             String token = jwtService.generateToken(authRequest.username());
             return new AuthResponse(user.getUsername(),token, user.getId());
@@ -52,9 +54,12 @@ public class AuthService {
     }
 
     public UserResponse register(UserCreateRequest userCreateRequest){
-        User user = new User(userCreateRequest.getName(),userCreateRequest.getUsername()
+        User user = new User(
+                userCreateRequest.getName()
+                ,userCreateRequest.getUsername()
                 ,passwordEncoder.bCryptPasswordEncoder().encode(userCreateRequest.getPassword())
-                ,userCreateRequest.getEmail());
+                ,userCreateRequest.getEmail()
+        );
 
         userRepository.save(user);
         return modelMapper.map(user,UserResponse.class);

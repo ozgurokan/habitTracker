@@ -21,6 +21,7 @@ public class Activity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Habit habit;
 
+
     private Instant createTime;
 
 
@@ -59,9 +60,5 @@ public class Activity {
 
     public Instant getCreateTime() {
         return createTime;
-    }
-
-    public void setCreateTime(Instant createTime) {
-        this.createTime = createTime;
     }
 }

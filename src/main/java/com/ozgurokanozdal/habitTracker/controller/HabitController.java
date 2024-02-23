@@ -1,5 +1,6 @@
 package com.ozgurokanozdal.habitTracker.controller;
 
+import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
 import com.ozgurokanozdal.habitTracker.dto.HabitCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.HabitUpdateRequest;
@@ -46,7 +47,10 @@ public class HabitController {
         return ResponseEntity.ok(habitService.delete(habitId));
     }
 
-
+    @GetMapping("/{habitId}/activities")
+    public ResponseEntity<List<ActivityResponse>> getHabitActivities(@PathVariable Long habitId){
+        return ResponseEntity.ok(habitService.getHabitActivityList(habitId));
+    }
 
 
 }

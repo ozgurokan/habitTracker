@@ -5,9 +5,9 @@ import com.ozgurokanozdal.habitTracker.dto.ActivityCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
 import com.ozgurokanozdal.habitTracker.entity.Activity;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
+import com.ozgurokanozdal.habitTracker.exceptions.ContentNotFoundException;
 import com.ozgurokanozdal.habitTracker.repository.ActivityRepository;
 import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -35,26 +35,26 @@ public class ActivityService {
 
 
     public ActivityResponse get(Long activityId){
-        Activity activity = activityRepository.findById(activityId).orElseThrow(EntityNotFoundException::new);
+        Activity activity = activityRepository.findById(activityId).orElseThrow(ContentNotFoundException::new);
         return modelMapper.map(activity,ActivityResponse.class);
     }
 
     public ActivityResponse create(ActivityCreateRequest activityCreateRequest) {
-        Habit habit = habitRepository.findById(activityCreateRequest.getHabit_id()).orElseThrow(EntityNotFoundException::new);
+        Habit habit = habitRepository.findById(activityCreateRequest.getHabit_id()).orElseThrow(ContentNotFoundException::new);
         Activity activity = new Activity(activityCreateRequest.getName(),habit, Instant.now());
         activityRepository.save(activity);
         return modelMapper.map(activity,ActivityResponse.class);
     }
 
     public ActivityResponse update(Long activityId, ActivityCreateRequest activityCreateRequest) {
-        Activity activity = activityRepository.findById(activityId).orElseThrow(EntityNotFoundException::new);
+        Activity activity = activityRepository.findById(activityId).orElseThrow(ContentNotFoundException::new);
         activity.setName(activityCreateRequest.getName());
         activityRepository.save(activity);
         return modelMapper.map(activity,ActivityResponse.class);
     }
 
     public String delete(Long activityId) {
-        Activity activity = activityRepository.findById(activityId).orElseThrow(EntityNotFoundException::new);
+        Activity activity = activityRepository.findById(activityId).orElseThrow(ContentNotFoundException::new);
         activityRepository.delete(activity);
         return "Activity -> " + activityId + " deleted";
     }

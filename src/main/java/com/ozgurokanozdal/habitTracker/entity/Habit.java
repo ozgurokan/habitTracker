@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.List;
 import java.util.Set;
 
 // habit setleri ile rutinler oluşturulabilir.
@@ -23,7 +24,7 @@ public class Habit {
     private User user;
 
     @OneToMany(mappedBy = "habit",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Activity> activities;
+    private List<Activity> activities;
 
     public Habit() {
     }
@@ -58,13 +59,16 @@ public class Habit {
         this.user = user;
     }
 
+    public List<Activity> getActivities(){
+        return activities;
+    }
+
     @Override
     public String toString() {
         return "Habit{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", user=" + user +
-                ", activities=" + activities +
                 '}';
     }
 }
