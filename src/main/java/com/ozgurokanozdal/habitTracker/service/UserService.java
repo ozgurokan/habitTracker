@@ -20,6 +20,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,12 +35,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper,PasswordEncoder passwordEncoder){
+    public UserService(UserRepository userRepository, ModelMapper modelMapper,BCryptPasswordEncoder bCryptPasswordEncoder){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
     }
 
@@ -57,7 +58,7 @@ public class UserService implements UserDetailsService {
         User user = new User(
                     userCreateRequest.getName(),
                     userCreateRequest.getUsername(),
-                    passwordEncoder.bCryptPasswordEncoder().encode(userCreateRequest.getPassword()),
+                    bCryptPasswordEncoder.encode(userCreateRequest.getPassword()),
                     userCreateRequest.getEmail()
         );
         user = userRepository.save(user);

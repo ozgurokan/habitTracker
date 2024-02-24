@@ -1,4 +1,4 @@
-package com.ozgurokanozdal.habitTracker.dto;
+package com.ozgurokanozdal.habitTracker.exceptions;
 
 import java.time.LocalDateTime;
 import java.util.Set;

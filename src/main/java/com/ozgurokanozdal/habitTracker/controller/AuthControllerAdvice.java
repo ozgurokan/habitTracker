@@ -1,6 +1,6 @@
 package com.ozgurokanozdal.habitTracker.controller;
 
-import com.ozgurokanozdal.habitTracker.dto.ValidationErrorBody;
+import com.ozgurokanozdal.habitTracker.exceptions.ValidationErrorBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
