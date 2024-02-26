@@ -1,6 +1,8 @@
 package com.ozgurokanozdal.habitTracker.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
 
@@ -16,7 +18,9 @@ public class Activity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habit_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Habit habit;
+
 
     private Instant createTime;
 
@@ -56,9 +60,5 @@ public class Activity {
 
     public Instant getCreateTime() {
         return createTime;
-    }
-
-    public void setCreateTime(Instant createTime) {
-        this.createTime = createTime;
     }
 }

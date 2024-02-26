@@ -1,5 +1,6 @@
 package com.ozgurokanozdal.habitTracker.controller;
 
+import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
 import com.ozgurokanozdal.habitTracker.dto.HabitCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.HabitUpdateRequest;
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/habit")
+@ResponseBody
+@RequestMapping("api/v1/habit")
 public class HabitController {
 
     private final HabitService habitService;
@@ -45,7 +47,10 @@ public class HabitController {
         return ResponseEntity.ok(habitService.delete(habitId));
     }
 
-
+    @GetMapping("/{habitId}/activities")
+    public ResponseEntity<List<ActivityResponse>> getHabitActivities(@PathVariable Long habitId){
+        return ResponseEntity.ok(habitService.getHabitActivityList(habitId));
+    }
 
 
 }

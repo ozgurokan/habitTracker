@@ -37,12 +37,12 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x ->
-                        x.requestMatchers("/auth/welcome/**","/auth/register/**", "auth/login/**").permitAll())
+                        x.requestMatchers("api/v1/auth/**").permitAll())
                 .authorizeHttpRequests(x->
                         x
-                                .requestMatchers("/user/**").authenticated()
-                                .requestMatchers("/habit/**").authenticated()
-                                .requestMatchers("/activity/**").authenticated()
+                                .requestMatchers("api/v1/user/**").authenticated()
+                                .requestMatchers("api/v1/habit/**").authenticated()
+                                .requestMatchers("api/v1/activity/**").authenticated()
                 )
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

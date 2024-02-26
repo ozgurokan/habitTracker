@@ -2,7 +2,6 @@ package com.ozgurokanozdal.habitTracker.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,10 +16,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     private String name;
 
     @Column(unique = true)
+
     private String username;
 
     private String password;
@@ -28,9 +27,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Habit> habitList;
+
+
+    private Boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,7 +55,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public User(){
@@ -103,10 +104,6 @@ public class User implements UserDetails {
         this.habitList = habitList;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -121,6 +118,12 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+
+    public void setEnabled(Boolean isEnable){
+        this.enabled = isEnable;
     }
 
     @Override
