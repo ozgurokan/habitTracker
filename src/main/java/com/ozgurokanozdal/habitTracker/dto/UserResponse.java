@@ -1,8 +1,6 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
-import com.ozgurokanozdal.habitTracker.entity.Habit;
 
-import java.util.List;
 
 public class UserResponse {
 

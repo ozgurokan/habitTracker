@@ -2,7 +2,6 @@ package com.ozgurokanozdal.habitTracker.controller;
 
 import com.ozgurokanozdal.habitTracker.dto.ActivityCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
-import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
 import com.ozgurokanozdal.habitTracker.service.ActivityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,23 +1,15 @@
 package com.ozgurokanozdal.habitTracker.service;
 
 
-import com.ozgurokanozdal.habitTracker.config.PasswordEncoder;
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
 import com.ozgurokanozdal.habitTracker.entity.ConfirmationToken;
-import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.entity.User;
 import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
-import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
 import com.ozgurokanozdal.habitTracker.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,11 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.LogManager;
 import java.util.stream.Collectors;
 
 @Service

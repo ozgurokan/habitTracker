@@ -4,8 +4,6 @@ import com.ozgurokanozdal.habitTracker.exceptions.AlreadyExistException;
 import com.ozgurokanozdal.habitTracker.exceptions.CustomResponseBody;
 import com.ozgurokanozdal.habitTracker.exceptions.ValidationErrorBody;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

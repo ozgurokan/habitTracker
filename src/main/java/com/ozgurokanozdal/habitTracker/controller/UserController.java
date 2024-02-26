@@ -2,7 +2,6 @@ package com.ozgurokanozdal.habitTracker.controller;
 
 
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
-import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
 import com.ozgurokanozdal.habitTracker.service.UserService;
