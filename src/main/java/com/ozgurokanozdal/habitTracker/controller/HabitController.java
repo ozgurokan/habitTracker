@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @ResponseBody
-@RequestMapping("/habit")
+@RequestMapping("api/v1/habit")
 public class HabitController {
 
     private final HabitService habitService;

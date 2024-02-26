@@ -6,6 +6,7 @@ import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
+import com.ozgurokanozdal.habitTracker.entity.ConfirmationToken;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.entity.User;
 import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
@@ -23,9 +24,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.LogManager;
 import java.util.stream.Collectors;
 
@@ -36,11 +39,13 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper,BCryptPasswordEncoder bCryptPasswordEncoder){
+    public UserService(UserRepository userRepository, ModelMapper modelMapper,BCryptPasswordEncoder bCryptPasswordEncoder,ConfirmationTokenService confirmationTokenService){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.confirmationTokenService = confirmationTokenService;
 
     }
 
@@ -54,15 +59,25 @@ public class UserService implements UserDetailsService {
         return modelMapper.map(user, UserResponse.class);
     };
 
-    public UserResponse save(UserCreateRequest userCreateRequest){
+    public String save(UserCreateRequest userCreateRequest){
+
         User user = new User(
                     userCreateRequest.getName(),
                     userCreateRequest.getUsername(),
                     bCryptPasswordEncoder.encode(userCreateRequest.getPassword()),
-                    userCreateRequest.getEmail()
-        );
+                    userCreateRequest.getEmail());
         user = userRepository.save(user);
-        return modelMapper.map(user, UserResponse.class);
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user);
+
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        return token;
     }
 
     public UserUpdateRequest update(Long userId,UserUpdateRequest userUpdateRequest){
@@ -86,12 +101,20 @@ public class UserService implements UserDetailsService {
         return user.getHabitList().stream().map(habit -> modelMapper.map(habit, HabitResponse.class)).collect(Collectors.toList());
     }
 
-    public User getByUsername(String username){
-        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    public Optional<User> getByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<User> getByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    }
+
+    public int enableUser(String email) {
+        return userRepository.enabledUser(email);
     }
 }

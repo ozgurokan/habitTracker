@@ -1,12 +1,12 @@
 package com.ozgurokanozdal.habitTracker.exceptions;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.Map;
 
 public record ValidationErrorBody(
         String path,
         int statusCode,
-        Set<String> errors,
+        Map<String,String> errors,
         LocalDateTime localDateTime
 ) {
 }

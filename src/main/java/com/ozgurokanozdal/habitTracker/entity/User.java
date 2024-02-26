@@ -2,10 +2,6 @@ package com.ozgurokanozdal.habitTracker.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,26 +16,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min = 3)
     private String name;
 
     @Column(unique = true)
-    @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]{6,24}$",
-            message = "username must be of 6 to 24 length with no special characters.")
+
     private String username;
 
-    @NotBlank
     private String password;
 
     @Column(unique = true)
-    @NotBlank
-    @Email(message = "Invalid type of Email.")
     private String email;
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Habit> habitList;
+
+
+    private Boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -63,7 +55,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public User(){
@@ -112,10 +104,6 @@ public class User implements UserDetails {
         this.habitList = habitList;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -130,6 +118,12 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+
+    public void setEnabled(Boolean isEnable){
+        this.enabled = isEnable;
     }
 
     @Override

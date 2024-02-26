@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @ResponseBody
-@RequestMapping("/user")
+@RequestMapping("api/v1/user")
 public class UserController {
 
 
@@ -30,10 +30,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getAll());
     }
 
-    @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody UserCreateRequest userCreateRequest){
-        return ResponseEntity.ok(userService.save(userCreateRequest));
-    }
+//    @PostMapping
+//    public ResponseEntity<UserResponse> create(@RequestBody UserCreateRequest userCreateRequest){
+//        return ResponseEntity.ok(userService.save(userCreateRequest));
+//    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> get(@PathVariable Long userId){
