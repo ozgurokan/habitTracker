@@ -32,6 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-mail-service.properties
+src/main/resources/mail-service.properties
 
 
