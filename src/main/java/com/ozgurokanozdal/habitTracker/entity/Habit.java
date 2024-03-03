@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
-// habit setleri ile rutinler oluşturulabilir.
 @Entity
 public class Habit {
 

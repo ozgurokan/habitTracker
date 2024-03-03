@@ -91,7 +91,7 @@ public class UserService implements UserDetailsService {
         return user.getHabitList().stream().map(habit -> modelMapper.map(habit, HabitResponse.class)).collect(Collectors.toList());
     }
 
-    public Optional<User> getByUsername(String username){
+    public Optional<User> getByUsername(String username) throws UsernameNotFoundException{
         return userRepository.findByUsername(username);
     }
 

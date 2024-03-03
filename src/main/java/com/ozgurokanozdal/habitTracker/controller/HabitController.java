@@ -4,7 +4,10 @@ import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
 import com.ozgurokanozdal.habitTracker.dto.HabitCreateRequest;
 import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.HabitUpdateRequest;
+import com.ozgurokanozdal.habitTracker.entity.Habit;
 import com.ozgurokanozdal.habitTracker.service.HabitService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,11 @@ public class HabitController {
     @GetMapping
     public ResponseEntity<List<HabitResponse>> getAll(){
         return ResponseEntity.ok(habitService.getAll());
+    }
+
+    @GetMapping("/paginate")
+    public ResponseEntity<Page<HabitResponse>> getAllWithPage(Pageable pageable){
+        return ResponseEntity.ok(habitService.getAllWithPage(pageable));
     }
 
     @PostMapping
@@ -50,6 +58,14 @@ public class HabitController {
     @GetMapping("/{habitId}/activities")
     public ResponseEntity<List<ActivityResponse>> getHabitActivities(@PathVariable Long habitId){
         return ResponseEntity.ok(habitService.getHabitActivityList(habitId));
+    }
+
+
+
+    // this end point returns activity list of a habit with pagination.
+    @GetMapping("/{habitId}/activities/paginate")
+    public ResponseEntity<Page<ActivityResponse>> getHabitActivitiesWithPage(@PathVariable long habitId,Pageable pageable){
+        return ResponseEntity.ok(habitService.getHabitActivityListWithPage(habitId,pageable));
     }
 
 
