@@ -1,6 +1,5 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
-import com.ozgurokanozdal.habitTracker.entity.User;
 
 public class HabitCreateRequest {
 

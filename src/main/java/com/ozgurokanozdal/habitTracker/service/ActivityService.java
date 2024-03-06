@@ -9,6 +9,8 @@ import com.ozgurokanozdal.habitTracker.exceptions.ContentNotFoundException;
 import com.ozgurokanozdal.habitTracker.repository.ActivityRepository;
 import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -31,6 +33,11 @@ public class ActivityService {
 
     public List<ActivityResponse> getAll(){
         return activityRepository.findAll().stream().map(element -> modelMapper.map(element,ActivityResponse.class)).collect(Collectors.toList());
+    }
+
+    // pagination for activity list of habits!
+    public Page<ActivityResponse> getAllByHabitId(long habitId,Pageable pageable){
+        return activityRepository.findAllByHabitId(habitId,pageable).map(e -> modelMapper.map(e, ActivityResponse.class));
     }
 
 

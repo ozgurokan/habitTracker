@@ -1,6 +1,5 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
-import java.time.Instant;
 
 public class HabitUpdateRequest {
 

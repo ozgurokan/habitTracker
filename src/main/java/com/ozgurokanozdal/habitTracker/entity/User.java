@@ -1,6 +1,7 @@
 package com.ozgurokanozdal.habitTracker.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,10 +29,11 @@ public class User implements UserDetails {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Habit> habitList;
 
 
-    private Boolean enabled = false;
+    private Boolean enabled = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

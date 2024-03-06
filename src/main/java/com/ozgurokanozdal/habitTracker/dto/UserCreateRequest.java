@@ -12,12 +12,12 @@ public class UserCreateRequest {
 
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z0-9]{6,24}$",
-            message = "username must be of 6 to 24 length with no special characters.")
+            message = "Username must be of 6 to 24 length with no special characters.")
     private String username;
 
     @NotBlank
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$",
-                message = "password must contain at least one uppercase, one lowercase, one number and also one special symbol")
+                message = "Password must contain at least one uppercase, one lowercase, one number and one special symbol")
     private String password;
 
     @NotBlank

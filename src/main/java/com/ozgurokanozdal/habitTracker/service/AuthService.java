@@ -9,7 +9,6 @@ import com.ozgurokanozdal.habitTracker.entity.ConfirmationToken;
 import com.ozgurokanozdal.habitTracker.entity.User;
 import com.ozgurokanozdal.habitTracker.exceptions.AlreadyExistException;
 import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
-import com.ozgurokanozdal.habitTracker.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.function.Supplier;
 
 
 @Service
@@ -74,8 +73,8 @@ public class AuthService {
 
 
         String token = userService.save(userCreateRequest);
-        String link = "http://localhost:8080/api/v1/auth/confirm?token="+token;
-        eMailService.send(userCreateRequest.getEmail(),buildEmail(userCreateRequest.getUsername(),link));
+//        String link = "http://localhost:8080/api/v1/auth/confirm?token="+token;
+//        eMailService.send(userCreateRequest.getEmail(),buildEmail(userCreateRequest.getUsername(),link));
 
         return modelMapper.map(userCreateRequest, UserResponse.class);
     }
