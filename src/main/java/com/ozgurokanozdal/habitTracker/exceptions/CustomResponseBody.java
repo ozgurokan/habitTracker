@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record CustomResponseBody(
         String path,
         int statusCode,
-        String message,
+        String errors,
         LocalDateTime localDateTime
 ) {
 }

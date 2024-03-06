@@ -5,6 +5,8 @@ import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
 import com.ozgurokanozdal.habitTracker.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +31,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getAll());
     }
 
-//    @PostMapping
-//    public ResponseEntity<UserResponse> create(@RequestBody UserCreateRequest userCreateRequest){
-//        return ResponseEntity.ok(userService.save(userCreateRequest));
-//    }
+    @GetMapping("/paginate")
+    public ResponseEntity<Page<UserResponse>> getAllWithPage(Pageable pageable){
+        return ResponseEntity.ok(userService.getAllWithPage(pageable));
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> get(@PathVariable Long userId){

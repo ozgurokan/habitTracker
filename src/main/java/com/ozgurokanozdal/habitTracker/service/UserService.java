@@ -10,6 +10,8 @@ import com.ozgurokanozdal.habitTracker.entity.User;
 import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
 import com.ozgurokanozdal.habitTracker.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,6 +44,10 @@ public class UserService implements UserDetailsService {
 
     public List<UserResponse> getAll(){
         return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserResponse.class)).collect(Collectors.toList());
+    }
+
+    public Page<UserResponse> getAllWithPage(Pageable pageable) {
+        return userRepository.findAll(pageable).map(e -> modelMapper.map(e, UserResponse.class));
     }
 
     public UserResponse getOneById(long id){
@@ -107,4 +113,6 @@ public class UserService implements UserDetailsService {
     public int enableUser(String email) {
         return userRepository.enabledUser(email);
     }
+
+
 }

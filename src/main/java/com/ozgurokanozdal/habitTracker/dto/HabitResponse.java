@@ -1,18 +1,20 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
 
+import com.ozgurokanozdal.habitTracker.entity.User;
+
 public class HabitResponse {
 
     private long id;
 
     private String name;
 
-    private long userId;
+    private UserResponse user;
 
-    public HabitResponse(long id, String name, long userId) {
+    public HabitResponse(long id, String name,UserResponse user) {
         this.id = id;
         this.name = name;
-        this.userId = userId;
+        this.user = user;
     }
 
     public HabitResponse() {
@@ -34,11 +36,12 @@ public class HabitResponse {
         this.name = name;
     }
 
-    public long getUserId() {
-        return userId;
+
+    public UserResponse getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(UserResponse user) {
+        this.user = user;
     }
 }

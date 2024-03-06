@@ -26,11 +26,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "Hoşgeldin cano! This is Ozgur Okan Ozdal project";
-    }
-
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid UserCreateRequest userCreateRequest){
         return ResponseEntity.ok(authService.register(userCreateRequest));

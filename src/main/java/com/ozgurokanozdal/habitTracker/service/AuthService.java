@@ -73,8 +73,8 @@ public class AuthService {
 
 
         String token = userService.save(userCreateRequest);
-        String link = "http://localhost:8080/api/v1/auth/confirm?token="+token;
-        eMailService.send(userCreateRequest.getEmail(),buildEmail(userCreateRequest.getUsername(),link));
+//        String link = "http://localhost:8080/api/v1/auth/confirm?token="+token;
+//        eMailService.send(userCreateRequest.getEmail(),buildEmail(userCreateRequest.getUsername(),link));
 
         return modelMapper.map(userCreateRequest, UserResponse.class);
     }
