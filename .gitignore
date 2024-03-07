@@ -33,5 +33,6 @@ build/
 .vscode/
 
 src/main/resources/mail-service.properties
+src/main/resources/application.properties
 
 
