@@ -40,6 +40,10 @@ public class ActivityService {
         return activityRepository.findAllByHabitId(habitId,pageable).map(e -> modelMapper.map(e, ActivityResponse.class));
     }
 
+    public Page<ActivityResponse> getAllByUsername(long userId,Pageable pageable) {
+        return activityRepository.findAllByUserId(userId,pageable).map(e -> modelMapper.map(e,ActivityResponse.class));
+    }
+
 
     public ActivityResponse get(Long activityId){
         Activity activity = activityRepository.findById(activityId).orElseThrow(ContentNotFoundException::new);
@@ -48,7 +52,7 @@ public class ActivityService {
 
     public ActivityResponse create(ActivityCreateRequest activityCreateRequest) {
         Habit habit = habitRepository.findById(activityCreateRequest.getHabit_id()).orElseThrow(ContentNotFoundException::new);
-        Activity activity = new Activity(activityCreateRequest.getName(),habit, Instant.now());
+        Activity activity = new Activity(activityCreateRequest.getName(),habit, Instant.now(),habit.getUser());
         activityRepository.save(activity);
         return modelMapper.map(activity,ActivityResponse.class);
     }
@@ -65,4 +69,6 @@ public class ActivityService {
         activityRepository.delete(activity);
         return "Activity -> " + activityId + " deleted";
     }
+
+
 }

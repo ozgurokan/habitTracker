@@ -92,8 +92,8 @@ public class UserService implements UserDetailsService {
         return "User -> " + id + " deleted";
     }
 
-    public List<HabitResponse> getUserHabitList(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    public List<HabitResponse> getUserHabitList(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
         return user.getHabitList().stream().map(habit -> modelMapper.map(habit, HabitResponse.class)).collect(Collectors.toList());
     }
 
@@ -115,4 +115,8 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public UserResponse getOneByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        return modelMapper.map(user, UserResponse.class);
+    }
 }

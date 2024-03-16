@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@ResponseBody
 @RequestMapping("api/v1/habit")
 public class HabitController {
 
@@ -36,7 +35,7 @@ public class HabitController {
     }
 
     @PostMapping
-    public ResponseEntity<HabitCreateRequest> create(@RequestBody HabitCreateRequest habitCreateRequest){
+    public ResponseEntity<HabitResponse> create(@RequestBody HabitCreateRequest habitCreateRequest){
         return ResponseEntity.ok(habitService.create(habitCreateRequest));
     }
 

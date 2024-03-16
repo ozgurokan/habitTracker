@@ -1,8 +1,6 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
 
-import com.ozgurokanozdal.habitTracker.entity.User;
-
 public class HabitResponse {
 
     private long id;
@@ -10,6 +8,7 @@ public class HabitResponse {
     private String name;
 
     private UserResponse user;
+
 
     public HabitResponse(long id, String name,UserResponse user) {
         this.id = id;

@@ -14,11 +14,14 @@ public class ActivityResponse {
 
     private Instant createTime;
 
-    public ActivityResponse(long id, String name, Long habitId, Instant createTime) {
+    private UserResponse user;
+
+    public ActivityResponse(long id, String name, Long habitId, Instant createTime,UserResponse user) {
         this.id = id;
         this.name = name;
         this.habitId = habitId;
         this.createTime = createTime;
+        this.user = user;
     }
 
     public ActivityResponse() {
@@ -54,5 +57,13 @@ public class ActivityResponse {
 
     public void setCreateTime(Instant createTime) {
         this.createTime = createTime;
+    }
+
+    public UserResponse getUser() {
+        return user;
+    }
+
+    public void setUser(UserResponse user) {
+        this.user = user;
     }
 }
