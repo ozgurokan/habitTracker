@@ -1,10 +1,8 @@
 package com.ozgurokanozdal.habitTracker.controller;
 
-import com.ozgurokanozdal.habitTracker.dto.ActivityResponse;
-import com.ozgurokanozdal.habitTracker.dto.HabitCreateRequest;
-import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
-import com.ozgurokanozdal.habitTracker.dto.HabitUpdateRequest;
+import com.ozgurokanozdal.habitTracker.dto.*;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
+import com.ozgurokanozdal.habitTracker.entity.Likes;
 import com.ozgurokanozdal.habitTracker.service.HabitService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@ResponseBody
 @RequestMapping("api/v1/habit")
 public class HabitController {
 
@@ -36,7 +33,7 @@ public class HabitController {
     }
 
     @PostMapping
-    public ResponseEntity<HabitCreateRequest> create(@RequestBody HabitCreateRequest habitCreateRequest){
+    public ResponseEntity<HabitResponse> create(@RequestBody HabitCreateRequest habitCreateRequest){
         return ResponseEntity.ok(habitService.create(habitCreateRequest));
     }
 
@@ -66,6 +63,11 @@ public class HabitController {
     @GetMapping("/{habitId}/activities/paginate")
     public ResponseEntity<Page<ActivityResponse>> getHabitActivitiesWithPage(@PathVariable long habitId,Pageable pageable){
         return ResponseEntity.ok(habitService.getHabitActivityListWithPage(habitId,pageable));
+    }
+
+    @GetMapping("/{habitId}/likes/paginate")
+    public ResponseEntity<Page<LikeResponse>> getHabitLikesWithPage(@PathVariable long habitId, Pageable pageable){
+        return ResponseEntity.ok(habitService.getHabitLikesListWithPage(habitId,pageable));
     }
 
 

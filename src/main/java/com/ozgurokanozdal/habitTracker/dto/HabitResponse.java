@@ -1,7 +1,8 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
 
-import com.ozgurokanozdal.habitTracker.entity.User;
+
+import java.util.List;
 
 public class HabitResponse {
 
@@ -11,10 +12,14 @@ public class HabitResponse {
 
     private UserResponse user;
 
-    public HabitResponse(long id, String name,UserResponse user) {
+    private List<LikeListResponse> likesList;
+
+
+    public HabitResponse(long id, String name,UserResponse user,List<LikeListResponse> likesList) {
         this.id = id;
         this.name = name;
         this.user = user;
+        this.likesList =likesList;
     }
 
     public HabitResponse() {
@@ -43,5 +48,13 @@ public class HabitResponse {
 
     public void setUser(UserResponse user) {
         this.user = user;
+    }
+
+    public List<LikeListResponse> getLikesList() {
+        return likesList;
+    }
+
+    public void setLikesList(List<LikeListResponse> likesList) {
+        this.likesList = likesList;
     }
 }

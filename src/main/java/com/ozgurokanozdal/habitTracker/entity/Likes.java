@@ -1,44 +1,45 @@
 package com.ozgurokanozdal.habitTracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
-
-
 @Entity
-public class Activity {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habit_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action =  OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Habit habit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private User user;
 
 
-    private Instant createTime;
+    public Likes(){
 
+    }
 
-    public Activity(String name, Habit habit, Instant createTime,User user) {
-        this.name = name;
+    public Likes(long id, Habit habit,User user) {
+        this.id = id;
         this.habit = habit;
-        this.createTime = createTime;
+        this.user = user;
+    }
+    public Likes(Habit habit,User user) {
+        this.habit = habit;
         this.user = user;
     }
 
-    public Activity() {
-    }
 
     public long getId() {
         return id;
@@ -48,28 +49,12 @@ public class Activity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Habit getHabit() {
         return habit;
     }
 
     public void setHabit(Habit habit) {
         this.habit = habit;
-    }
-
-    public Instant getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Instant createTime) {
-        this.createTime = createTime;
     }
 
     public User getUser() {

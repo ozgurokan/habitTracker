@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@ResponseBody
 @RequestMapping("api/v1/auth")
 public class AuthController {
 

@@ -3,10 +3,12 @@ package com.ozgurokanozdal.habitTracker.service;
 
 import com.ozgurokanozdal.habitTracker.dto.*;
 import com.ozgurokanozdal.habitTracker.entity.Habit;
+import com.ozgurokanozdal.habitTracker.entity.Likes;
 import com.ozgurokanozdal.habitTracker.entity.User;
 import com.ozgurokanozdal.habitTracker.exceptions.ContentNotFoundException;
 import com.ozgurokanozdal.habitTracker.exceptions.UserNotFoundException;
 import com.ozgurokanozdal.habitTracker.repository.HabitRepository;
+import com.ozgurokanozdal.habitTracker.repository.LikeRepository;
 import com.ozgurokanozdal.habitTracker.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,12 +27,16 @@ public class HabitService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final ActivityService activityService;
+    private final LikeRepository likeRepository;
 
-    public HabitService(HabitRepository habitRepository, ModelMapper modelMapper,UserRepository userRepository,ActivityService activityService){
+    public HabitService(HabitRepository habitRepository,
+                        ModelMapper modelMapper,UserRepository userRepository,
+                        ActivityService activityService,LikeRepository likeRepository){
         this.habitRepository = habitRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.activityService = activityService;
+        this.likeRepository = likeRepository;
     }
 
 
@@ -49,11 +55,11 @@ public class HabitService {
         return modelMapper.map(habit, HabitResponse.class);
     }
 
-    public HabitCreateRequest create(HabitCreateRequest habitCreateRequest){
+    public HabitResponse create(HabitCreateRequest habitCreateRequest){
         User user = userRepository.findById(habitCreateRequest.getUserId()).orElseThrow(UserNotFoundException::new);
         Habit habit = new Habit(habitCreateRequest.getName(),user);
         habitRepository.save(habit);
-        return modelMapper.map(habit, HabitCreateRequest.class);
+        return modelMapper.map(habit, HabitResponse.class);
     }
 
     public HabitResponse update(Long habitId,HabitUpdateRequest habitUpdateRequest){
@@ -81,5 +87,13 @@ public class HabitService {
     public Page<ActivityResponse> getHabitActivityListWithPage(long habitId, Pageable pageable) {
         Habit habit = habitRepository.findById(habitId).orElseThrow(ContentNotFoundException::new);
         return activityService.getAllByHabitId(habitId,pageable);
+    }
+
+
+    //like response DTO will add
+    public Page<LikeResponse> getHabitLikesListWithPage(long habitId, Pageable pageable) {
+
+        Habit habit = habitRepository.findById(habitId).orElseThrow(ContentNotFoundException::new);
+        return likeRepository.findAllByHabitId(habit.getId(),pageable).map(likes -> modelMapper.map(likes, LikeResponse.class));
     }
 }

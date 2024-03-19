@@ -54,6 +54,8 @@ public class SecurityConfig {
         };
     }
 
+
+    // role base yapilabilir.
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -66,6 +68,8 @@ public class SecurityConfig {
                                 .requestMatchers("api/v1/user/**").authenticated()
                                 .requestMatchers("api/v1/habit/**").authenticated()
                                 .requestMatchers("api/v1/activity/**").authenticated()
+                                .requestMatchers("api/v1/comment/**").authenticated()
+                                .requestMatchers("api/v1/like/**").authenticated()
                 )
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

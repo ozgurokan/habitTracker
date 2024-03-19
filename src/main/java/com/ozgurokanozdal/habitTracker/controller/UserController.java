@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@ResponseBody
 @RequestMapping("api/v1/user")
 public class UserController {
 
@@ -36,14 +35,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllWithPage(pageable));
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserResponse> get(@PathVariable Long userId){
-        return ResponseEntity.ok(userService.getOneById(userId));
+    @GetMapping("/{username}")
+    public ResponseEntity<UserResponse> get(@PathVariable String username){
+        return ResponseEntity.ok(userService.getOneByUsername(username));
     }
 
-    @GetMapping("/{userId}/habits")
-    public ResponseEntity<List<HabitResponse>> getUserHabits(@PathVariable Long userId){
-        return ResponseEntity.ok(userService.getUserHabitList(userId));
+    @GetMapping("/{username}/habits")
+    public ResponseEntity<List<HabitResponse>> getUserHabits(@PathVariable String username){
+        return ResponseEntity.ok(userService.getUserHabitList(username));
     }
 
 

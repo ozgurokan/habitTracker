@@ -24,13 +24,15 @@ public class Habit {
     @OneToMany(mappedBy = "habit",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Activity> activities;
 
+    @OneToMany(mappedBy = "habit",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Likes> likesList;
+
     public Habit() {
     }
 
     public Habit(String name, User user) {
         this.name = name;
         this.user = user;
-
     }
 
     public long getId() {
@@ -59,6 +61,10 @@ public class Habit {
 
     public List<Activity> getActivities(){
         return activities;
+    }
+
+    public List<Likes> getLikesList() {
+        return likesList;
     }
 
     @Override
