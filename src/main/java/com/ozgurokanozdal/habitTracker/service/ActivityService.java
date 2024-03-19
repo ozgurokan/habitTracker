@@ -50,11 +50,17 @@ public class ActivityService {
         return modelMapper.map(activity,ActivityResponse.class);
     }
 
+
+    //kendisi dışındakilerin activity eklmeyememesinin daha mantıklı bir yolu vardır belki direkt security ile araştır.
     public ActivityResponse create(ActivityCreateRequest activityCreateRequest) {
-        Habit habit = habitRepository.findById(activityCreateRequest.getHabit_id()).orElseThrow(ContentNotFoundException::new);
-        Activity activity = new Activity(activityCreateRequest.getName(),habit, Instant.now(),habit.getUser());
-        activityRepository.save(activity);
-        return modelMapper.map(activity,ActivityResponse.class);
+        Habit habit = habitRepository.findById(activityCreateRequest.getHabitId()).orElseThrow(ContentNotFoundException::new);
+        if(habit.getUser().getId() == activityCreateRequest.getUserId()){
+            Activity activity = new Activity(activityCreateRequest.getName(),habit, Instant.now(),habit.getUser());
+            activityRepository.save(activity);
+            return modelMapper.map(activity,ActivityResponse.class);
+        }else {
+            throw new IllegalStateException();
+        }
     }
 
     public ActivityResponse update(Long activityId, ActivityCreateRequest activityCreateRequest) {

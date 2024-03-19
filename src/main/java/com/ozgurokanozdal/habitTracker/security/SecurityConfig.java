@@ -69,6 +69,7 @@ public class SecurityConfig {
                                 .requestMatchers("api/v1/habit/**").authenticated()
                                 .requestMatchers("api/v1/activity/**").authenticated()
                                 .requestMatchers("api/v1/comment/**").authenticated()
+                                .requestMatchers("api/v1/like/**").authenticated()
                 )
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

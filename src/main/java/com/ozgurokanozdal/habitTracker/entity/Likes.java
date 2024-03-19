@@ -35,6 +35,10 @@ public class Likes {
         this.habit = habit;
         this.user = user;
     }
+    public Likes(Habit habit,User user) {
+        this.habit = habit;
+        this.user = user;
+    }
 
 
     public long getId() {
