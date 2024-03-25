@@ -8,8 +8,13 @@ public class UserResponse {
 
     private String username;
 
-
     private String name;
+
+    public UserResponse(long id, String username, String name) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+    }
 
     public long getId() {
         return id;

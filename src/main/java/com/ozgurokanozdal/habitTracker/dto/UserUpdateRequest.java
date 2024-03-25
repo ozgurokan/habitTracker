@@ -1,10 +1,22 @@
 package com.ozgurokanozdal.habitTracker.dto;
 
 
-public class UserUpdateRequest {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
+public class UserUpdateRequest {
+    @Size(min = 3)
     private String name;
+
+    @NotBlank
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$",
+            message = "Password must contain at least one uppercase, one lowercase, one number and one special symbol")
     private String password;
+
+    @NotBlank
+    @Email(message = "Invalid type of Email.")
     private String email;
 
     public UserUpdateRequest(){
