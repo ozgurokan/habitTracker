@@ -69,6 +69,13 @@ public class User implements UserDetails {
         this.password = password;
         this.email = email;
     }
+    public User(long id,String name, String username, String password,String email){
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public User(String name, String username, String password,String email,List<Habit> habitList){
         this.name = name;
@@ -139,4 +146,6 @@ public class User implements UserDetails {
                 ", habitSet=" + habitList +
                 '}';
     }
+
+
 }

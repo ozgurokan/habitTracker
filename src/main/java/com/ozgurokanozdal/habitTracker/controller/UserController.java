@@ -5,6 +5,7 @@ import com.ozgurokanozdal.habitTracker.dto.HabitResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserResponse;
 import com.ozgurokanozdal.habitTracker.dto.UserUpdateRequest;
 import com.ozgurokanozdal.habitTracker.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,7 @@ public class UserController {
 
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserUpdateRequest> update(@PathVariable Long userId, @RequestBody UserUpdateRequest userUpdateRequest){
+    public ResponseEntity<UserResponse> update(@PathVariable Long userId, @RequestBody UserUpdateRequest userUpdateRequest){
         return ResponseEntity.ok(userService.update(userId,userUpdateRequest));
     }
 

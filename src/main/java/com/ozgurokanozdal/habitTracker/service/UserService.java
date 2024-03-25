@@ -32,7 +32,6 @@ public class UserService implements UserDetailsService {
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-
     public UserService(UserRepository userRepository, ModelMapper modelMapper,BCryptPasswordEncoder bCryptPasswordEncoder,ConfirmationTokenService confirmationTokenService){
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -40,6 +39,7 @@ public class UserService implements UserDetailsService {
         this.confirmationTokenService = confirmationTokenService;
 
     }
+
 
 
     public List<UserResponse> getAll(){
@@ -76,14 +76,14 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
-    public UserUpdateRequest update(Long userId,UserUpdateRequest userUpdateRequest){
+    public UserResponse update(Long userId,UserUpdateRequest userUpdateRequest){
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
         user.setName(userUpdateRequest.getName());
         user.setEmail(userUpdateRequest.getEmail());
         user.setPassword(userUpdateRequest.getPassword());
         userRepository.save(user);
-        return modelMapper.map(user, UserUpdateRequest.class);
+        return modelMapper.map(user, UserResponse.class);
     }
 
     public String delete(long id){
