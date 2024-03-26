@@ -21,6 +21,11 @@ public class HabitResponse {
         this.user = user;
         this.likesList =likesList;
     }
+    public HabitResponse(long id, String name,UserResponse user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
 
     public HabitResponse() {
     }

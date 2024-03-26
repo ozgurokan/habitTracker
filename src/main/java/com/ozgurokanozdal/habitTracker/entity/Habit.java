@@ -34,6 +34,11 @@ public class Habit {
         this.name = name;
         this.user = user;
     }
+    public Habit(long id,String name, User user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
 
     public long getId() {
         return id;

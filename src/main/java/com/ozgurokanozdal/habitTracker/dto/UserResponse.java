@@ -16,6 +16,9 @@ public class UserResponse {
         this.name = name;
     }
 
+    public UserResponse() {
+    }
+
     public long getId() {
         return id;
     }

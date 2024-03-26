@@ -57,9 +57,8 @@ public class HabitService {
 
     public HabitResponse create(HabitCreateRequest habitCreateRequest){
         User user = userRepository.findById(habitCreateRequest.getUserId()).orElseThrow(UserNotFoundException::new);
-        Habit habit = new Habit(habitCreateRequest.getName(),user);
-        habitRepository.save(habit);
-        return modelMapper.map(habit, HabitResponse.class);
+        Habit habit1 = habitRepository.save(new Habit(habitCreateRequest.getName(),user));
+        return modelMapper.map(habit1, HabitResponse.class);
     }
 
     public HabitResponse update(Long habitId,HabitUpdateRequest habitUpdateRequest){
